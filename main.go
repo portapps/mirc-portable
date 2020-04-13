@@ -6,20 +6,21 @@ import (
 	"os"
 
 	"github.com/go-ini/ini"
-	. "github.com/portapps/portapps"
-	"github.com/portapps/portapps/pkg/utl"
+	"github.com/portapps/portapps/v2"
+	"github.com/portapps/portapps/v2/pkg/log"
+	"github.com/portapps/portapps/v2/pkg/utl"
 )
 
 var (
-	app *App
+	app *portapps.App
 )
 
 func init() {
 	var err error
 
 	// Init app
-	if app, err = New("mirc-portable", "mIRC"); err != nil {
-		Log.Fatal().Err(err).Msg("Cannot initialize application. See log file for more info.")
+	if app, err = portapps.New("mirc-portable", "mIRC"); err != nil {
+		log.Fatal().Err(err).Msg("Cannot initialize application. See log file for more info.")
 	}
 }
 
@@ -35,7 +36,7 @@ func main() {
 	settingsPath := utl.PathJoin(app.DataPath, "mirc.ini")
 	if _, err := os.Stat(settingsPath); err == nil {
 		ini.PrettyFormat = false
-		Log.Info().Msg("Update settings...")
+		log.Info().Msg("Update settings...")
 		cfg, err := ini.LoadSources(ini.LoadOptions{
 			IgnoreInlineComment:         true,
 			SkipUnrecognizableLines:     false,
@@ -67,10 +68,10 @@ func main() {
 		if err == nil {
 			cfg.Section("update").Key("check").SetValue("0")
 			if err := cfg.SaveTo(settingsPath); err != nil {
-				Log.Error().Err(err).Msg("Write settings")
+				log.Error().Err(err).Msg("Write settings")
 			}
 		} else {
-			Log.Error().Err(err).Msg("Load mirc.ini file")
+			log.Error().Err(err).Msg("Load mirc.ini file")
 		}
 	}
 
