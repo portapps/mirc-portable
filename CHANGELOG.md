@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.75-15 (2022/09/10)
+
+* mIRC 7.75
+* Portapps 3.8.0
+* Bump github.com/go-ini/ini from 1.66.6 to 1.67.0
+
 ## 7.68-14 (2022/06/05)
 
 * mIRC 7.68
