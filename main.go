@@ -1,9 +1,9 @@
 //go:generate go install -v github.com/josephspurrier/goversioninfo/cmd/goversioninfo
-//go:generate goversioninfo -icon=res/papp.ico -manifest=res/papp.manifest
 package main
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/go-ini/ini"
 	"github.com/portapps/portapps/v3"
@@ -26,14 +26,14 @@ func init() {
 
 func main() {
 	utl.CreateFolder(app.DataPath)
-	app.Process = utl.PathJoin(app.AppPath, "mirc.exe")
+	app.Process = filepath.Join(app.AppPath, "mirc.exe")
 	app.Args = []string{
 		"-r" + app.DataPath,
 		"-noreg",
 	}
 
 	// Update settings
-	settingsPath := utl.PathJoin(app.DataPath, "mirc.ini")
+	settingsPath := filepath.Join(app.DataPath, "mirc.ini")
 	if _, err := os.Stat(settingsPath); err == nil {
 		ini.PrettyFormat = false
 		log.Info().Msg("Update settings...")
